@@ -10,7 +10,7 @@ import SystemInfo from "../components/SystemInfo";
 import AlertPanel from "../components/AlertPanel";
 import ThresholdSettings from "../components/ThresholdSettings";
 
-const WS_URL = import.meta.env.VITE_WS_URL || "ws://127.0.0.1:8000/ws";
+const WS_URL = import.meta.env.VITE_WS_URL || "wss://127.0.0.1:8000/ws";
 
 export default function Dashboard() {
   const { connectionStatus, lastMessage } = useWebSocket(WS_URL);
