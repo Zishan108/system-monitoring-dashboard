@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 load_dotenv()  # reads backend/.env into environment variables BEFORE
                 # broadcaster.py reads os.getenv("METRICS_INTERVAL")
@@ -52,12 +53,34 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+
+
+allowed_origins = [
+
+    "http://localhost:5173",
+
+    "http://127.0.0.1:5173",
+
+]
+
+frontend_url = os.getenv("FRONTEND_URL")
+
+if frontend_url:
+
+    allowed_origins.append(frontend_url)
+
 app.add_middleware(
+
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+
+    allow_origins=allowed_origins,
+
     allow_credentials=True,
+
     allow_methods=["*"],
+
     allow_headers=["*"],
+
 )
 
 app.include_router(websocket.router)
